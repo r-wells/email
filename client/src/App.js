@@ -22,12 +22,12 @@ class App extends Component {
      }).then(res => {
        return res.json();
      }).then(data => {
-       this.setState({emails: data}, () => window.localStorage.setItem('appInboxEmails', data));
+       this.setState({emails: data}, () => window.localStorage.setItem('appInboxEmails', JSON.stringify(data)));
      }).catch((err) => {
        console.error(err.message);
        const localEmails = window.localStorage.getItem('appInboxEmails');
        this.setState({
-         emails: localEmails
+         emails: JSON.parse(localEmails)
        })
      })
    }
