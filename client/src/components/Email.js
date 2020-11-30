@@ -12,12 +12,12 @@ import reply from '../images/reply.png';
 import notreadmail from '../images/notreadmail.png';
 import markasread from '../images/markasread.png';
 
-const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler }) => {
+const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHandler }) => {
     const [emailData, setEmailData] = useState();
     const {emailId} = useParams();
     useEffect(() => {
         if(!emailData) {
-            fetch(`http://localhost:9000/emails/${emailId}`, {
+            fetch(`http://localhost:9000/emails/email/${emailId}`, {
                 method: "GET"
             }).then(res => res.json()).then(data => setEmailData(data.requestedEmail[0]));
         }
@@ -35,7 +35,7 @@ const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler }) => {
         return <div className="emailWrapper">
             <div id="emailHeader">
                 <img onClick={() => window.location.href = '/'} className="emailTabIcon" src={backarrow} />
-                <img className="emailTabIcon" src={deleteicon} />
+                <img onClick={() => deleteEmailHandler(emailId)} className="emailTabIcon" src={deleteicon} />
                 <img className="emailTabIcon" src={archiveicon} />
                 <img className="emailTabIcon" src={reportspam} />
                 <img onClick={() => clickHandler()} className="emailTabIcon" src={readIcon} />

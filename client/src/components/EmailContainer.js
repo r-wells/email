@@ -12,7 +12,7 @@ const EmailContainer = ({emails, emailClickHandler, markAsReadHandler, sendEmail
                 subject={email.subject} isRead={email.isRead} 
                 id={email.id}/>;
         })}
-        {sendEmail && <NewEmail closeHandler={sendEmailHandler} />}
+        {sendEmail && <NewEmail closeHandler={sendEmailHandler} sendEmailHandler={sendEmailHandler} />}
     </div>;
 }
  
