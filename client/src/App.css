@@ -1,0 +1,13 @@
+.appContainer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.wrapper {
+  display: flex;
+  margin-top: 10px;
+}
+
+.emailContainerWrapper {
+  width: 90%;
+}

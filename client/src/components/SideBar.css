@@ -1,0 +1,24 @@
+.sideBar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 10%;
+}
+
+.sideBarButton {
+  background-color: red;
+  border: none;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 15px;
+  width: 100%;
+}
+
+.sideBarButton:hover {
+  background-color: #ffffff;
+  border: 1px solid red;
+  color: red;
+  cursor: pointer;
+}

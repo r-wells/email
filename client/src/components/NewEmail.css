@@ -1,0 +1,55 @@
+.newEmailContainer {
+  background: #ffffff;
+  border: 1px solid black;
+  bottom: 0;
+  height: 500px;
+  position: absolute;
+  right: 10px;
+  width: 500px;
+}
+
+.newEmailSendData {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.newEmailHeader {
+  align-items: center;
+  background-color: #000000;
+  border-bottom: 1px solid #d3d3d3;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.newEmailHeader > p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.newEmailTextArea {
+  border: none;
+  height: 300px;
+  outline-width: 0;
+  margin: 5px;
+  resize: none;
+}
+
+.newEmailSendButton {
+  background-color: #3399ff;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  height: 50px;
+  margin-left: 5px;
+  width: 150px;
+}
+
+.newEmailSendButton:hover {
+  cursor: pointer;
+  background-color: rgb(51, 153, 255, 0.8);
+}

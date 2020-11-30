@@ -1,0 +1,25 @@
+.emailWrapper {
+  background-color: #ffffff;
+  padding: 0 20px;
+}
+
+.emailHeaderTitle {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.emailHeaderTitle > h4 {
+  font-weight: bold;
+  margin: 0;
+}
+
+.emailHeaderTitle > p {
+  margin: 0;
+  margin-left: 20px;
+}
+
+.emailBody {
+  margin: 0 auto;
+  width: 50%;
+}
