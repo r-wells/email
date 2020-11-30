@@ -10,6 +10,7 @@ git clone https://github.com/r-wells/email
 ```
 
 Install for both the client and api:
+<br />
 API
 ```
 cd api
@@ -27,4 +28,4 @@ npm start
 Enjoy!
 
 ## Notes
-This product is a work in progress. Later features will include post/delete/put updates for sending, deleteing and editing emails on the api.
+This product is a work in progress. Later features will include post/delete/put updates for sending, deleting and editing emails on the api.
