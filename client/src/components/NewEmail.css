@@ -2,8 +2,8 @@
   background: #ffffff;
   border: 1px solid black;
   bottom: 0;
-  height: 500px;
-  position: absolute;
+  height: 525px;
+  position: fixed;
   right: 10px;
   width: 500px;
 }
