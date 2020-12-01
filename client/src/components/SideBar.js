@@ -1,4 +1,4 @@
-import './SideBar.css'
+import './SideBar.css';
 import SideBarItem from './SideBarItem';
 
 const SideBar = ({sendEmailClickHandler}) => {
@@ -12,12 +12,7 @@ const SideBar = ({sendEmailClickHandler}) => {
         <SideBarItem clickHandler={redirectHandler} text="Spam" />
         <SideBarItem clickHandler={redirectHandler} text="Trash" />
         <SideBarItem clickHandler={redirectHandler} text="Archives" />
-        <SideBarItem clickHandler={redirectHandler} text="Category 1" />
-        <SideBarItem clickHandler={redirectHandler} text="Category 2" />
-        <SideBarItem clickHandler={redirectHandler} text="Category 3" />
-        <SideBarItem clickHandler={redirectHandler} text="Category 4" />
-        <SideBarItem clickHandler={redirectHandler} text="Category 5" />
     </ul>;
 }
- 
+
 export default SideBar;

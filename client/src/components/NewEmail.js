@@ -1,6 +1,6 @@
 import './NewEmail.css';
 
-const NewEmail = ({closeHandler, sendEmailHandler}) => {
+const NewEmail = ({ closeHandler }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('to', event.target.querySelector('#to').value);
@@ -14,11 +14,11 @@ const NewEmail = ({closeHandler, sendEmailHandler}) => {
                 message: event.target.querySelector('#message').value,
             }),
             headers: { 'Content-Type': 'application/json' },
-        }).then(function(res) {
+        }).then(function (res) {
             res.json();
         })
-        .catch(err => console.error(err.message));
-        sendEmailHandler();
+            .catch(err => console.error(err.message));
+        closeHandler();
     }
 
     return <div className="newEmailContainer">
@@ -44,5 +44,5 @@ const NewEmail = ({closeHandler, sendEmailHandler}) => {
         </form>
     </div>;
 }
- 
+
 export default NewEmail;

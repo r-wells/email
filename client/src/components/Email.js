@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import NewEmail from './NewEmail';
 import './Email.css';
@@ -12,11 +12,11 @@ import reply from '../images/reply.png';
 import notreadmail from '../images/notreadmail.png';
 import markasread from '../images/markasread.png';
 
-const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHandler }) => {
+const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHandler, archiveHandler, markAsSpamHandler, replyHandler }) => {
     const [emailData, setEmailData] = useState();
-    const {emailId} = useParams();
+    const { emailId } = useParams();
     useEffect(() => {
-        if(!emailData) {
+        if (!emailData) {
             fetch(`http://localhost:9000/emails/email/${emailId}`, {
                 method: "GET"
             }).then(res => res.json()).then(data => setEmailData(data.requestedEmail[0]));
@@ -31,13 +31,13 @@ const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHand
 
     const readIcon = emailData && emailData.isRead ? markasread : notreadmail;
 
-    if(emailData) {
+    if (emailData) {
         return <div className="emailWrapper">
             <div id="emailHeader">
                 <img onClick={() => window.location.href = '/'} className="emailTabIcon" src={backarrow} />
                 <img onClick={() => deleteEmailHandler(emailId)} className="emailTabIcon" src={deleteicon} />
-                <img className="emailTabIcon" src={archiveicon} />
-                <img className="emailTabIcon" src={reportspam} />
+                <img onClick={() => archiveHandler(emailData.id)} className="emailTabIcon" src={archiveicon} />
+                <img onClick={() => markAsSpamHandler(emailData.id)} className="emailTabIcon" src={reportspam} />
                 <img onClick={() => clickHandler()} className="emailTabIcon" src={readIcon} />
             </div>
             <div id="emailBodyHeader">
@@ -49,7 +49,7 @@ const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHand
                 <img className="emailTabIcon" style={{ height: "40px", width: "40px" }} src={personicon} />
                 <h4>{emailData.senderName}</h4>
                 <p>{emailData.senderEmail}</p>
-                <img style={{ marginLeft: "10px" }} className="emailTabIcon" src={reply} />
+                <img onClick={() => replyHandler()} style={{ marginLeft: "10px" }} className="emailTabIcon" src={reply} />
             </div>
             <div className="emailBody" id="emailBody">{emailData.description}</div>
             {sendEmail && <NewEmail closeHandler={sendEmailHandler} />}
@@ -58,5 +58,5 @@ const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHand
         return <h2>Loading...</h2>;
     }
 }
- 
+
 export default Email;
