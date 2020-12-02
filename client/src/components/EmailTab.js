@@ -28,13 +28,16 @@ const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmail
 
     const inlineStyles = emailData.isRead ? {} : { backgroundColor: "#ffffff" };
 
-    return <div onMouseOver={() => changeIconsContainerDisplay(true)} onMouseOut={() => changeIconsContainerDisplay(false)} className="emailTabContainer" style={inlineStyles}>
+    return <div onMouseOver={() => changeIconsContainerDisplay(true)}
+        onMouseOut={() => changeIconsContainerDisplay(false)}
+        className="emailTabContainer" style={inlineStyles}>
         <input className="emailTabCheckbox" onClick={() => checkboxClickHandler()} type="checkbox" />
-        <div className="emailTabTextContainer">
-            <div style={{ display: "flex", alignItems: "center" }} onClick={() => textClickHandler()} >
-                <p className="emailTabSubject">{emailData.senderName}</p>
-                <p className="emailTabSnippet">{emailData.subject}</p>
-            </div>
+        <div style={{ display: "flex", alignItems: "center", overflow: "hidden" }}>
+            <span style={{ display: "flex", alignItems: "center", overflow: "hidden", maxWidth: "100%" }} onClick={() => textClickHandler()} >
+                <p className="emailTabName">{emailData.senderName}</p>
+                <p className="emailTabSnippet">{emailData.subject}</p> -
+                <p className="emailTabDescription"><em>{emailData.description}</em></p>
+            </span>
             <div ref={iconsContainer} style={{ display: 'none' }} className="emailTabIconsContainer">
                 <img onClick={() => replyHandler()} className="emailTabIcon" src={reply} />
                 <img onClick={() => archiveHandler(emailData.id)} className="emailTabIcon" src={archiveicon} />

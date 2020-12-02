@@ -4,25 +4,29 @@
   display: flex;
   height: 50px;
   justify-content: flex-start;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  overflow: none;
   padding-left: 10px;
   max-width: 100%;
 }
 
-.emailTabSubject {
+.emailTabName {
   font-weight: 600;
   margin-right: 20px;
-  overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 .emailTabSnippet {
+  margin-right: 5px;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.emailTabDescription {
+  color: lightslategrey;
+  margin-left: 5px;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
 }
 
 .emailTabCheckbox {
@@ -37,19 +41,17 @@
 .emailTabTextContainer {
   align-items: center;
   display: flex;
-  height: 50px;
+  max-width: 80%;
+  overflow: hidden;
 }
 
 .emailTabIconsContainer {
   align-items: center;
-  background: transparent;
   cursor: pointer;
   display: flex;
   height: 50px;
   justify-content: center;
-  position: absolute;
-  right: 9.65%;
-  width: 15%;
+  z-index: 1000;
 }
 
 .emailTabIcon {
