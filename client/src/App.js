@@ -23,6 +23,7 @@ class App extends Component {
 
   async componentDidMount() {
     const localEmails = window.localStorage.getItem('appInboxEmails');
+    console.log('localEmails', localEmails);
     if (localEmails !== null && localEmails !== undefined) {
       this.setState({
         emails: JSON.parse(localEmails)
@@ -34,7 +35,9 @@ class App extends Component {
       return res.json();
     }).then(data => {
       console.log('data', data);
-      this.setState({ emails: data }, console.log(this.state.emails["inbox"]));
+      this.setState({ emails: data }, () => {
+        window.localStorage.setItem('appInboxEmails', JSON.stringify(data));
+      });
     }).catch((err) => {
       console.error(err.message);
     })
