@@ -1,17 +1,21 @@
 import './SideBar.css';
 import SideBarItem from './SideBarItem';
 
-const SideBar = ({sendEmailClickHandler}) => {
-    const redirectHandler = () => {
-        window.location.href = '/';
+const SideBar = ({ sendEmailClickHandler, emails }) => {
+    const redirectHandler = (type) => {
+        if (type === 'inbox') {
+            window.location.href = `/`
+        } else {
+            window.location.href = `/${type}`
+        }
     }
 
     return <ul className="sideBar">
         <button onClick={() => sendEmailClickHandler()} className="sideBarButton">New Email</button>
-        <SideBarItem clickHandler={redirectHandler} text="Inbox" numEmails={16} />
-        <SideBarItem clickHandler={redirectHandler} text="Spam" />
-        <SideBarItem clickHandler={redirectHandler} text="Trash" />
-        <SideBarItem clickHandler={redirectHandler} text="Archives" />
+        <SideBarItem numEmails={emails.inbox.length} clickHandler={redirectHandler} type="inbox" text="Inbox" />
+        <SideBarItem numEmails={emails.spam.length} clickHandler={redirectHandler} type="spam" text="Spam" />
+        <SideBarItem numEmails={emails.trash.length} clickHandler={redirectHandler} type="trash" text="Trash" />
+        <SideBarItem numEmails={emails.archive.length} clickHandler={redirectHandler} type="archive" text="Archive" />
     </ul>;
 }
 

@@ -6,7 +6,7 @@ import reply from '../images/reply.png';
 import notreadmail from '../images/notreadmail.png';
 import markasread from '../images/markasread.png';
 
-const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmailHandler, archiveHandler, replyHandler }) => {
+const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmailHandler, archiveHandler, replyHandler, type }) => {
     const [isSelected, setIsSelected] = useState(false);
     const iconsContainer = useRef(null);
 
@@ -15,7 +15,7 @@ const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmail
     }
 
     const textClickHandler = () => {
-        emailClickHandler(emailData.id, { to: emailData.senderEmail, from: 'no-reply@gmail.com' });
+        emailClickHandler(emailData.id, type);
     }
 
     const changeIconsContainerDisplay = (enter) => {
@@ -26,7 +26,7 @@ const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmail
         }
     }
 
-    const inlineStyles = emailData.isRead ? {} : { backgroundColor: "#ffffff" }
+    const inlineStyles = emailData.isRead ? {} : { backgroundColor: "#ffffff" };
 
     return <div onMouseOver={() => changeIconsContainerDisplay(true)} onMouseOut={() => changeIconsContainerDisplay(false)} className="emailTabContainer" style={inlineStyles}>
         <input className="emailTabCheckbox" onClick={() => checkboxClickHandler()} type="checkbox" />
@@ -39,7 +39,9 @@ const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmail
                 <img onClick={() => replyHandler()} className="emailTabIcon" src={reply} />
                 <img onClick={() => archiveHandler(emailData.id)} className="emailTabIcon" src={archiveicon} />
                 <img onClick={() => deleteEmailHandler(emailData.id)} className="emailTabIcon" src={deleteicon} />
-                {emailData.isRead ? <img onClick={() => markAsReadHandler(emailData.id)} className="emailTabIcon" src={markasread} /> : <img onClick={() => markAsReadHandler(emailData.id)} className="emailTabIcon" src={notreadmail} />}
+                {emailData.isRead
+                    ? <img onClick={() => markAsReadHandler(emailData.id, type)} className="emailTabIcon" src={markasread} />
+                    : <img onClick={() => markAsReadHandler(emailData.id, type)} className="emailTabIcon" src={notreadmail} />}
             </div>
         </div>
     </div>;

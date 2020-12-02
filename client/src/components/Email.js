@@ -12,46 +12,43 @@ import reply from '../images/reply.png';
 import notreadmail from '../images/notreadmail.png';
 import markasread from '../images/markasread.png';
 
-const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHandler, archiveHandler, markAsSpamHandler, replyHandler }) => {
-    const [emailData, setEmailData] = useState();
+const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHandler, archiveHandler, markAsSpamHandler, replyHandler, emails, type }) => {
     const { emailId } = useParams();
-    useEffect(() => {
-        if (!emailData) {
-            fetch(`http://localhost:9000/emails/email/${emailId}`, {
-                method: "GET"
-            }).then(res => res.json()).then(data => setEmailData(data.requestedEmail[0]));
+    let email = null;
+    emails.forEach(e => {
+        if (e.id === Number(emailId)) {
+            email = e;
         }
-    }, [emailId]);
+    });
+    const [isRead, setIsRead] = useState();
     const clickHandler = () => {
-        const oldEmailData = emailData;
-        oldEmailData.isRead = !oldEmailData.isRead;
-        setEmailData(oldEmailData);
-        markAsReadHandler(emailData.id);
+        setIsRead(!isRead);
+        markAsReadHandler(email.id, type);
     }
 
-    const readIcon = emailData && emailData.isRead ? markasread : notreadmail;
+    const readIcon = email && isRead ? markasread : notreadmail;
 
-    if (emailData) {
+    if (email) {
         return <div className="emailWrapper">
             <div id="emailHeader">
                 <img onClick={() => window.location.href = '/'} className="emailTabIcon" src={backarrow} />
                 <img onClick={() => deleteEmailHandler(emailId)} className="emailTabIcon" src={deleteicon} />
-                <img onClick={() => archiveHandler(emailData.id)} className="emailTabIcon" src={archiveicon} />
-                <img onClick={() => markAsSpamHandler(emailData.id)} className="emailTabIcon" src={reportspam} />
+                <img onClick={() => archiveHandler(email.id)} className="emailTabIcon" src={archiveicon} />
+                <img onClick={() => markAsSpamHandler(email.id)} className="emailTabIcon" src={reportspam} />
                 <img onClick={() => clickHandler()} className="emailTabIcon" src={readIcon} />
             </div>
             <div id="emailBodyHeader">
                 <h2 style={{ fontWeight: "normal", margin: "0" }}>
-                    {emailData.subject}
+                    {email.subject}
                 </h2>
             </div>
             <div className="emailHeaderTitle" id="emailHeaderTitle">
                 <img className="emailTabIcon" style={{ height: "40px", width: "40px" }} src={personicon} />
-                <h4>{emailData.senderName}</h4>
-                <p>{emailData.senderEmail}</p>
+                <h4>{email.senderName}</h4>
+                <p>{email.senderEmail}</p>
                 <img onClick={() => replyHandler()} style={{ marginLeft: "10px" }} className="emailTabIcon" src={reply} />
             </div>
-            <div className="emailBody" id="emailBody">{emailData.description}</div>
+            <div className="emailBody" id="emailBody">{email.description}</div>
             {sendEmail && <NewEmail closeHandler={sendEmailHandler} />}
         </div>;
     } else {

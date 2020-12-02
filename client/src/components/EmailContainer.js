@@ -3,7 +3,8 @@ import EmailTab from './EmailTab';
 import NewEmail from './NewEmail';
 import './EmailContainer.css';
 
-const EmailContainer = ({ emails, emailClickHandler, markAsReadHandler, sendEmailHandler, sendEmail, deleteEmailHandler, archiveHandler, sendEmailData, replyHandler }) => {
+const EmailContainer = ({ emails, emailClickHandler, markAsReadHandler, sendEmailHandler, sendEmail, deleteEmailHandler, archiveHandler, sendEmailData, replyHandler, type }) => {
+    console.log('emails', emails);
     return <div className="emailContainer">
         {emails.map(email => {
             return <EmailTab markAsReadHandler={markAsReadHandler}
@@ -13,7 +14,8 @@ const EmailContainer = ({ emails, emailClickHandler, markAsReadHandler, sendEmai
                 id={email.id}
                 deleteEmailHandler={deleteEmailHandler}
                 archiveHandler={archiveHandler} emailData={email}
-                replyHandler={replyHandler} />;
+                replyHandler={replyHandler}
+                type={type} />;
         })}
         {sendEmail && <NewEmail sendEmailData={sendEmailData} closeHandler={sendEmailHandler} />}
     </div>;

@@ -12,13 +12,18 @@ import {
 
 class App extends Component {
   state = {
-    emails: [],
+    emails: {
+      inbox: [],
+      trash: [],
+      spam: [],
+      archive: []
+    },
     displaySendEmail: false,
   }
 
   async componentDidMount() {
     const localEmails = window.localStorage.getItem('appInboxEmails');
-    if (localEmails != null && localEmails != undefined) {
+    if (localEmails !== null && localEmails !== undefined) {
       this.setState({
         emails: JSON.parse(localEmails)
       });
@@ -28,23 +33,20 @@ class App extends Component {
     }).then(res => {
       return res.json();
     }).then(data => {
-      this.setState({ emails: data }, () => window.localStorage.setItem('appInboxEmails', JSON.stringify(data)));
+      console.log('data', data);
+      this.setState({ emails: data }, console.log(this.state.emails["inbox"]));
     }).catch((err) => {
       console.error(err.message);
     })
   }
 
-  _emailRedirect = (id) => {
-    this.setState({
-      email: this.state.emails.filter(e => {
-        return e.id === id;
-      })
-    }, () => window.location.href = `/email/${id}`);
+  _emailRedirect = (id, type) => {
+    window.location.href = `/email/${type}/${id}`;
   }
 
-  _changeReadStatus = async (id) => {
-    const oldStateEmails = [...this.state.emails];
-    oldStateEmails.forEach(email => {
+  _changeReadStatus = async (id, type) => {
+    const oldStateEmails = { ...this.state.emails };
+    oldStateEmails[type].forEach(email => {
       if (email.id === id) {
         email.isRead = !email.isRead
       }
@@ -99,7 +101,7 @@ class App extends Component {
           <NavBar />
           <div className="appContainer">
             <div className="wrapper">
-              <SideBar sendEmailClickHandler={this._showSendEmail} />
+              <SideBar sendEmailClickHandler={this._showSendEmail} emails={emails} />
               <div className="emailContainerWrapper">
                 <Switch>
                   <Route exact path="/">
@@ -107,35 +109,60 @@ class App extends Component {
                       deleteEmailHandler={this._deleteEmail}
                       sendEmail={displaySendEmail} sendEmailHandler={this._showSendEmail}
                       markAsReadHandler={this._changeReadStatus}
-                      emailClickHandler={this._emailRedirect} emails={emails} replyHandler={this._showSendEmail} />
+                      emailClickHandler={this._emailRedirect} emails={emails.inbox} replyHandler={this._showSendEmail} type={"inbox"} />
                   </Route>
-                  <Route exact path="/spam">
+                  <Route path="/spam">
                     <EmailContainer archiveHandler={this._archiveEmail}
                       deleteEmailHandler={this._deleteEmail}
                       sendEmail={displaySendEmail} sendEmailHandler={this._showSendEmail}
                       markAsReadHandler={this._changeReadStatus}
-                      emailClickHandler={this._emailRedirect} emails={emails} replyHandler={this._showSendEmail} />
+                      emailClickHandler={this._emailRedirect} emails={emails.spam} replyHandler={this._showSendEmail} type={"spam"} />
                   </Route>
-                  <Route exact path="/trash">
+                  <Route path="/trash">
                     <EmailContainer archiveHandler={this._archiveEmail}
                       deleteEmailHandler={this._deleteEmail}
                       sendEmail={displaySendEmail} sendEmailHandler={this._showSendEmail}
                       markAsReadHandler={this._changeReadStatus}
-                      emailClickHandler={this._emailRedirect} emails={emails} replyHandler={this._showSendEmail} />
+                      emailClickHandler={this._emailRedirect} emails={emails.trash} replyHandler={this._showSendEmail} type={"trash"} />
                   </Route>
-                  <Route exact path="/archive">
+                  <Route path="/archive">
                     <EmailContainer archiveHandler={this._archiveEmail}
                       deleteEmailHandler={this._deleteEmail}
                       sendEmail={displaySendEmail} sendEmailHandler={this._showSendEmail}
                       markAsReadHandler={this._changeReadStatus}
-                      emailClickHandler={this._emailRedirect} emails={emails} replyHandler={this._showSendEmail} />
+                      emailClickHandler={this._emailRedirect} emails={emails.archive} replyHandler={this._showSendEmail} type={"archive"} />
                   </Route>
-                  <Route path="/email/:emailId">
+                  <Route path="/email/inbox/:emailId">
                     <Email markAsSpamHandler={this._markAsSpam}
+                      type={"inbox"}
                       archiveHandler={this._archiveEmail}
                       deleteEmailHandler={this._deleteEmail} sendEmail={displaySendEmail}
                       sendEmailHandler={this._showSendEmail}
-                      markAsReadHandler={this._changeReadStatus} emails={emails} replyHandler={this._showSendEmail} />
+                      markAsReadHandler={this._changeReadStatus} emails={emails.inbox} replyHandler={this._showSendEmail} />
+                  </Route>
+                  <Route path="/email/spam/:emailId">
+                    <Email markAsSpamHandler={this._markAsSpam}
+                      type={"spam"}
+                      archiveHandler={this._archiveEmail}
+                      deleteEmailHandler={this._deleteEmail} sendEmail={displaySendEmail}
+                      sendEmailHandler={this._showSendEmail}
+                      markAsReadHandler={this._changeReadStatus} emails={emails.spam} replyHandler={this._showSendEmail} />
+                  </Route>
+                  <Route path="/email/trash/:emailId">
+                    <Email markAsSpamHandler={this._markAsSpam}
+                      type={"trash"}
+                      archiveHandler={this._archiveEmail}
+                      deleteEmailHandler={this._deleteEmail} sendEmail={displaySendEmail}
+                      sendEmailHandler={this._showSendEmail}
+                      markAsReadHandler={this._changeReadStatus} emails={emails.trash} replyHandler={this._showSendEmail} />
+                  </Route>
+                  <Route path="/email/archive/:emailId">
+                    <Email markAsSpamHandler={this._markAsSpam}
+                      type={"archive"}
+                      archiveHandler={this._archiveEmail}
+                      deleteEmailHandler={this._deleteEmail} sendEmail={displaySendEmail}
+                      sendEmailHandler={this._showSendEmail}
+                      markAsReadHandler={this._changeReadStatus} emails={emails.archive} replyHandler={this._showSendEmail} />
                   </Route>
                 </Switch>
               </div>
