@@ -21,5 +21,38 @@
 
 .emailBody {
   margin: 0 auto;
+  margin-top: 40px;
+  text-align: center;
   width: 50%;
+}
+
+.emailBodyHeader {
+  font-weight: 500;
+  margin: 40px 0;
+}
+
+.emailBodyWrapper {
+  border: 1px solid #f5f7f7;
+  padding: 10px;
+  min-height: calc(100vh - 20%);
+}
+
+.emailReplyButton {
+  align-items: center;
+  background-color: #3399ff;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+  height: 50px;
+  justify-content: center;
+  margin-left: 5px;
+  width: 150px;
+}
+
+.emailReplyButton:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }

@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import './EmailTab.css'
-import deleteicon from '../images/deleteicon.png';
-import archiveicon from '../images/archiveicon.jpg';
-import reply from '../images/reply.png';
-import notreadmail from '../images/notreadmail.png';
-import markasread from '../images/markasread.png';
+import { GoReply } from 'react-icons/go';
+import { GoMailRead } from 'react-icons/go';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { RiMailLine } from 'react-icons/ri';
+import { IoArchiveOutline } from 'react-icons/io5';
 
 const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmailHandler, archiveHandler, replyHandler, type }) => {
     const [isSelected, setIsSelected] = useState(false);
@@ -39,12 +39,12 @@ const EmailTab = ({ emailData, emailClickHandler, markAsReadHandler, deleteEmail
                 <p className="emailTabDescription"><em>{emailData.description}</em></p>
             </span>
             <div ref={iconsContainer} style={{ display: 'none' }} className="emailTabIconsContainer">
-                <img onClick={() => replyHandler()} className="emailTabIcon" src={reply} />
-                <img onClick={() => archiveHandler(emailData.id)} className="emailTabIcon" src={archiveicon} />
-                <img onClick={() => deleteEmailHandler(emailData.id)} className="emailTabIcon" src={deleteicon} />
+                <GoReply onClick={() => replyHandler()} className="emailTabIcon" />
+                <IoArchiveOutline onClick={() => archiveHandler(emailData.id)} className="emailTabIcon" />
+                <RiDeleteBin5Line onClick={() => deleteEmailHandler(emailData.id)} className="emailTabIcon" />
                 {emailData.isRead
-                    ? <img onClick={() => markAsReadHandler(emailData.id, type)} className="emailTabIcon" src={markasread} />
-                    : <img onClick={() => markAsReadHandler(emailData.id, type)} className="emailTabIcon" src={notreadmail} />}
+                    ? <RiMailLine onClick={() => markAsReadHandler(emailData.id, type)} className="emailTabIcon" />
+                    : <GoMailRead onClick={() => markAsReadHandler(emailData.id, type)} className="emailTabIcon" />}
             </div>
         </div>
     </div>;

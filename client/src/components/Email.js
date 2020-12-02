@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import NewEmail from './NewEmail';
 import './Email.css';
 import './EmailTab.css';
-import backarrow from '../images/back-button.jpg';
-import deleteicon from '../images/deleteicon.png';
-import reportspam from '../images/report-as-spam.png';
-import personicon from '../images/personicon.png';
-import archiveicon from '../images/archiveicon.jpg';
-import reply from '../images/reply.png';
-import notreadmail from '../images/notreadmail.png';
-import markasread from '../images/markasread.png';
+import { GoReply } from 'react-icons/go';
+import { GoMailRead } from 'react-icons/go';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { RiSpam2Line } from 'react-icons/ri';
+import { RiMailLine } from 'react-icons/ri';
+import { IoArchiveOutline } from 'react-icons/io5';
+import { BiArrowBack } from 'react-icons/bi';
+import { BsFillPersonFill } from 'react-icons/bs';
 
 const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHandler, archiveHandler, markAsSpamHandler, replyHandler, emails, type }) => {
     const { emailId } = useParams();
@@ -26,29 +26,32 @@ const Email = ({ markAsReadHandler, sendEmail, sendEmailHandler, deleteEmailHand
         markAsReadHandler(email.id, type);
     }
 
-    const readIcon = email && isRead ? markasread : notreadmail;
+    const readIcon = email && isRead ? <GoMailRead onClick={() => clickHandler()} className="emailTabIcon" /> : <RiMailLine onClick={() => clickHandler()} className="emailTabIcon" />;
 
     if (email) {
         return <div className="emailWrapper">
             <div id="emailHeader">
-                <img onClick={() => window.location.href = '/'} className="emailTabIcon" src={backarrow} />
-                <img onClick={() => deleteEmailHandler(emailId)} className="emailTabIcon" src={deleteicon} />
-                <img onClick={() => archiveHandler(email.id)} className="emailTabIcon" src={archiveicon} />
-                <img onClick={() => markAsSpamHandler(email.id)} className="emailTabIcon" src={reportspam} />
-                <img onClick={() => clickHandler()} className="emailTabIcon" src={readIcon} />
+                <BiArrowBack onClick={() => window.location.href = '/'} className="emailTabIcon" />
+                <RiDeleteBin5Line onClick={() => deleteEmailHandler(emailId)} className="emailTabIcon" />
+                <IoArchiveOutline onClick={() => archiveHandler(emailId)} className="emailTabIcon" />
+                <RiSpam2Line onClick={() => markAsSpamHandler(email.id)} className="emailTabIcon" />
+                {readIcon}
             </div>
             <div id="emailBodyHeader">
-                <h2 style={{ fontWeight: "normal", margin: "0" }}>
+                <h2>
                     {email.subject}
                 </h2>
             </div>
-            <div className="emailHeaderTitle" id="emailHeaderTitle">
-                <img className="emailTabIcon" style={{ height: "40px", width: "40px" }} src={personicon} />
-                <h4>{email.senderName}</h4>
-                <p>{email.senderEmail}</p>
-                <img onClick={() => replyHandler()} style={{ marginLeft: "10px" }} className="emailTabIcon" src={reply} />
+            <div className="emailBodyWrapper">
+                <div className="emailHeaderTitle" id="emailHeaderTitle">
+                    <BsFillPersonFill className="emailTabIcon" style={{ height: "40px", width: "40px" }} />
+                    <h4>{email.senderName}</h4>
+                    <p>{email.senderEmail}</p>
+                    <GoReply onClick={() => replyHandler()} style={{ marginLeft: "10px" }} className="emailTabIcon" />
+                </div>
+                <div className="emailBody" id="emailBody">{email.description}</div>
+                <button onClick={() => replyHandler()} className="emailReplyButton"><GoReply style={{ height: "20px", width: "20px", marginRight: "10px" }} />Reply</button>
             </div>
-            <div className="emailBody" id="emailBody">{email.description}</div>
             {sendEmail && <NewEmail closeHandler={sendEmailHandler} />}
         </div>;
     } else {
